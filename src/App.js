@@ -6,19 +6,21 @@ function App() {
   const [pokemon, setPokemon] = useState([])
 
   const fetchPokemon = () => {
-    fetch("https://pokeapi.co/api/v2/ability/{id or name}/")
-      .then(response => {
-        return response.json()
-      })
-      .then(pokemonRes => {
-        setPokemon(pokemonRes);
+    fetch("https://pokeapi.co/api/v2/pokemon?limit=807")
+      .then((response) => response.json()
+      )
+      .then(jsonRes => {
+        setPokemon(jsonRes.results);
       })
       .catch(error => console.log(error))
   }
+
   return (
     <div className="App">
       <h2>List of Pokemon</h2>
       <button onClick={fetchPokemon}>Fetch Pokemon</button>
+      <hr />
+      {/* {JSON.stringify(pokemon)} */}
       <table>
         <thead>
           <tr>
@@ -26,14 +28,14 @@ function App() {
           </tr>
         </thead>
         <tbody>
-          {
-            pokemon.map((eachPokemon) => {
-              return (
-                <tr key={eachPokemon.name}>
-                  <td>{eachPokemon.name}</td>
-                </tr>
-              )
-            })
+        {
+          pokemon.map((p, idx) => {
+            return (
+              <tr key={idx}>
+                <td>{p.name}</td>
+              </tr>
+            )
+          })
           }
         </tbody>
       </table>
